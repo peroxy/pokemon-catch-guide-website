@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useStore } from '../Store';
 import { useLocation } from 'wouter';
 import { PokemonApi } from '../api/api';
-import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Input, InputGroup, SimpleGrid, Text } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Input, InputGroup, Stack, Text } from '@chakra-ui/react';
 
 export const Login = (): JSX.Element => {
   const [password, setPassword] = useState('');
@@ -18,7 +18,7 @@ export const Login = (): JSX.Element => {
         store.setPassword(password);
         setLocation('/pokemon');
       },
-      () => {
+      (error) => {
         store.removePassword();
         setError(true);
       }
@@ -28,7 +28,7 @@ export const Login = (): JSX.Element => {
   return (
     <Center marginTop={'40vh'}>
       <Box width={['95%', '70%', '50%', '25%']}>
-        <SimpleGrid columns={1} spacing={5}>
+        <Stack spacing={5}>
           <Text textAlign={'center'} fontSize={'xl'}>
             Welcome to Pokemon Catching Guide!
           </Text>
@@ -46,7 +46,7 @@ export const Login = (): JSX.Element => {
             <AlertIcon />
             <AlertDescription>Could not login. Please try again.</AlertDescription>
           </Alert>
-        </SimpleGrid>
+        </Stack>
       </Box>
     </Center>
   );

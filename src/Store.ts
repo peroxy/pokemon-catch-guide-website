@@ -5,6 +5,8 @@ export type Store = {
   password: string;
   setPassword: (pass: string) => void;
   removePassword: () => void;
+  apiUrl: string;
+  generation: 1 | 2 | 3 | 4 | 5 | 6;
 };
 
 const password = get<string>('pokemon-catch-guide-password');
@@ -17,5 +19,7 @@ export const useStore = create<Store>((setState) => ({
   removePassword: () => {
     set<string>('pokemon-catch-guide-password', '');
     setState({ password: '' });
-  }
+  },
+  apiUrl: process.env.API_URL || 'http://localhost:8080',
+  generation: 1 //todo
 }));
