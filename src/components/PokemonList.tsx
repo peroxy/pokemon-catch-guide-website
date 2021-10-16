@@ -1,4 +1,4 @@
-import { getAuthorizationHeader, Pokemon, PokemonApi } from '../api/api';
+import { getAuthorizationHeader, Pokemon } from '../api/api';
 import { useStore } from '../Store';
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
@@ -9,6 +9,9 @@ import {
   AlertTitle,
   Center,
   Checkbox,
+  Input,
+  Select,
+  SimpleGrid,
   Spinner,
   Table,
   Tbody,
@@ -22,8 +25,11 @@ import { useState } from 'react';
 export const PokemonList = (): JSX.Element => {
   const store = useStore();
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+  const [searchNumber, setSearchNumber] = useState<number | undefined>();
+  const [searchName, setSearchName] = useState<string | undefined>();
+  const [statusFilter, setStatusFilter] = useState<'all' | 'missing' | 'caught'>('all');
 
-  const { isLoading, error } = useQuery<Pokemon[], Error>('pokemonList', async () => {
+  const { isLoading, error, isFetching } = useQuery<Pokemon[], Error>(['pokemonList', store.generation], async () => {
     const { data } = await axios.get<Pokemon[]>(
       `${store.apiUrl}/pokemon/generations/${store.generation}`,
       getAuthorizationHeader(store.password)
@@ -40,7 +46,7 @@ export const PokemonList = (): JSX.Element => {
     );
   });
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <Center minHeight={'50vh'}>
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -62,41 +68,72 @@ export const PokemonList = (): JSX.Element => {
   }
 
   return (
-    <Table size="md">
-      <Thead>
-        <Tr>
-          <Th>#</Th>
-          <Th>Name</Th>
-          <Th>Status</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {pokemonList.map((pokemon, i) => (
+    <>
+      <Center margin={'1vh'}>
+        <Select width={'md'} defaultValue={store.generation} onChange={(event) => store.setGeneration(parseInt(event.currentTarget.value))}>
+          {[1, 2, 3, 4, 5, 6].map((value) => (
+            <option value={value}>Generation {value}</option>
+          ))}
+        </Select>
+      </Center>
+      <SimpleGrid columns={3}>
+        <Input type={'number'} placeholder={'search #'} onChange={(event) => setSearchNumber(parseInt(event.currentTarget.value))} />
+        <Input type={'text'} placeholder={'search name'} onChange={(event) => setSearchName(event.currentTarget.value)} />
+        <Select onChange={(event) => setStatusFilter(event.currentTarget.value as 'all' | 'caught' | 'missing')}>
+          <option value={'all'}>Show all</option>
+          <option value={'caught'}>Caught</option>
+          <option value={'missing'}>Missing</option>
+        </Select>
+      </SimpleGrid>
+      <Table size="md">
+        <Thead>
           <Tr>
-            <>
-              <Td isNumeric>{pokemon.dex_id}</Td>
-              <Td textTransform={'capitalize'}>{pokemon.name}</Td>
-              <Td textAlign={'center'}>
-                {mutation.isLoading && mutation?.variables?.id === pokemon.id ? (
-                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="sm" />
-                ) : (
-                  <Checkbox
-                    size={'lg'}
-                    defaultIsChecked={pokemon.caught}
-                    colorScheme={pokemon.caught ? 'green' : 'red'}
-                    onChange={(event) => {
-                      mutation.mutate({ caught: event.target.checked, id: pokemon.id });
-                      let updatedPokemonList = [...pokemonList];
-                      updatedPokemonList[i].caught = event.target.checked;
-                      setPokemonList(updatedPokemonList);
-                    }}
-                  />
-                )}
-              </Td>
-            </>
+            <Th isNumeric>#</Th>
+            <Th>Name</Th>
+            <Th textAlign={'center'}>Status</Th>
           </Tr>
-        ))}
-      </Tbody>
-    </Table>
+        </Thead>
+        <Tbody>
+          {pokemonList.map((pokemon, i) => {
+            let show: boolean = false;
+            if (
+              (statusFilter === 'caught' && pokemon.caught) ||
+              (statusFilter === 'missing' && !pokemon.caught) ||
+              statusFilter === 'all'
+            ) {
+              show = true;
+            }
+            if ((searchName && !pokemon.name.includes(searchName)) || (searchNumber && pokemon.dex_id !== searchNumber)) {
+              show = false;
+            }
+            return show ? (
+              <Tr>
+                <>
+                  <Td isNumeric>{pokemon.dex_id}</Td>
+                  <Td textTransform={'capitalize'}>{pokemon.name}</Td>
+                  <Td textAlign={'center'}>
+                    {mutation.isLoading && mutation?.variables?.id === pokemon.id ? (
+                      <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="sm" />
+                    ) : (
+                      <Checkbox
+                        size={'lg'}
+                        defaultIsChecked={pokemon.caught}
+                        colorScheme={pokemon.caught ? 'green' : 'red'}
+                        onChange={(event) => {
+                          mutation.mutate({ caught: event.target.checked, id: pokemon.id });
+                          let updatedPokemonList = [...pokemonList];
+                          updatedPokemonList[i].caught = event.target.checked;
+                          setPokemonList(updatedPokemonList);
+                        }}
+                      />
+                    )}
+                  </Td>
+                </>
+              </Tr>
+            ) : null;
+          })}
+        </Tbody>
+      </Table>
+    </>
   );
 };

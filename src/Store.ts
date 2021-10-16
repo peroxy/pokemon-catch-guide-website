@@ -1,15 +1,17 @@
 import create from 'zustand';
-import ls, { get, set } from 'local-storage';
+import { get, set } from 'local-storage';
 
 export type Store = {
   password: string;
   setPassword: (pass: string) => void;
   removePassword: () => void;
   apiUrl: string;
-  generation: 1 | 2 | 3 | 4 | 5 | 6;
+  generation: number;
+  setGeneration: (gen: number) => void;
 };
 
 const password = get<string>('pokemon-catch-guide-password');
+const generation = get<number>('pokemon-catch-guide-generation');
 export const useStore = create<Store>((setState) => ({
   password: password,
   setPassword: (pass: string) => {
@@ -21,5 +23,9 @@ export const useStore = create<Store>((setState) => ({
     setState({ password: '' });
   },
   apiUrl: process.env.API_URL || 'http://localhost:8080',
-  generation: 1 //todo
+  generation: generation || 1,
+  setGeneration: (gen: number) => {
+    set<number>('pokemon-catch-guide-generation', gen);
+    setState({ generation: gen });
+  }
 }));
