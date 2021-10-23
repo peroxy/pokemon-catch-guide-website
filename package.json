@@ -23,7 +23,8 @@
     "@chakra-ui/react": "^1.6.10",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "framer-motion": "^4.1.17"
+    "framer-motion": "^4.1.17",
+    "fast-sort": "^3.0.3"
   },
   "devDependencies": {
     "prettier": "^2.4.1"
