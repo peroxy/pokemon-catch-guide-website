@@ -7,6 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { PokemonDetails } from './components/PokemonDetails';
 import { PageNotFound } from './components/PageNotFound';
+import { Location } from './components/Location';
 
 export default function App() {
   const store = useStore();
@@ -28,6 +29,7 @@ export default function App() {
               }
             }}
           </Route>
+          <Route path={'/locations/:name'}>{(params) => <Location name={params.name} />}</Route>
           <Route component={PageNotFound} />
         </Switch>
       </QueryClientProvider>

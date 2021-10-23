@@ -1,4 +1,4 @@
-import { Divider, HStack, List, ListItem, Tag, Text, Wrap } from '@chakra-ui/react';
+import { Divider, HStack, Link, List, ListItem, Tag, Text, Wrap } from '@chakra-ui/react';
 import { sort } from 'fast-sort';
 import { Encounter } from '../api/api';
 
@@ -18,7 +18,9 @@ export const EncounterList = (props: EncounterListProps) => {
                 {encounter.location && (
                   <HStack>
                     <Tag>Location</Tag>
-                    <Text>{encounter.location}</Text>
+                    <Link href={`/locations/${encounter.location}`}>
+                      <Text>{encounter.location}</Text>
+                    </Link>
                   </HStack>
                 )}
                 {encounter.version && (
