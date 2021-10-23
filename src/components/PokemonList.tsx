@@ -10,6 +10,7 @@ import {
   Center,
   Checkbox,
   Input,
+  Link,
   Select,
   SimpleGrid,
   Spinner,
@@ -110,7 +111,9 @@ export const PokemonList = (): JSX.Element => {
               <Tr>
                 <>
                   <Td isNumeric>{pokemon.dex_id}</Td>
-                  <Td textTransform={'capitalize'}>{pokemon.name}</Td>
+                  <Td textTransform={'capitalize'}>
+                    <Link href={`pokemon/${pokemon.id}`}>{pokemon.name}</Link>
+                  </Td>
                   <Td textAlign={'center'}>
                     {mutation.isLoading && mutation?.variables?.id === pokemon.id ? (
                       <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="sm" />
