@@ -4,6 +4,8 @@ import { Encounter } from '../api/api';
 
 export interface EncounterListProps {
   encounters: Encounter[];
+  showLocation: boolean;
+  showPokemonName: boolean;
 }
 export const EncounterList = (props: EncounterListProps) => {
   return (
@@ -15,7 +17,15 @@ export const EncounterList = (props: EncounterListProps) => {
             <ListItem key={`pkmn-enc-${i}`}>
               <Divider width={'85vw'} marginTop={'1rem'} marginBottom={'1rem'} />
               <Wrap marginLeft={'1rem'}>
-                {encounter.location && (
+                {props.showPokemonName && encounter.pokemon_name && (
+                  <HStack>
+                    <Tag>Name</Tag>
+                    <Link href={`/pokemon/details/${encounter.pokemon_id}`}>
+                      <Text>{encounter.pokemon_name}</Text>
+                    </Link>
+                  </HStack>
+                )}
+                {props.showLocation && encounter.location && (
                   <HStack>
                     <Tag>Location</Tag>
                     <Link href={`/locations/${encounter.location}`}>

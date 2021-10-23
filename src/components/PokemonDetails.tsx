@@ -96,7 +96,7 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
         </Box>
         <Divider width={'85vw'} borderWidth={'2px'} />
         <Heading size={'sm'}>Encounters</Heading>
-        {data && <EncounterList encounters={data.encounters} />}
+        {data && <EncounterList showPokemonName={false} showLocation encounters={data.encounters} />}
       </VStack>
     </Center>
   );

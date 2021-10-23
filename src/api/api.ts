@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 export class PokemonApi {
   constructor(password: string) {
@@ -8,24 +8,12 @@ export class PokemonApi {
   readonly password: string;
   readonly apiUrl: string = process.env.API_URL || 'http://localhost:8080';
 
-  private readonly getPokemonRoute = `${this.apiUrl}/pokemon/:id`;
-  private readonly getEncountersRoute = `${this.apiUrl}/pokemon/:pokemon_id/encounters`;
-  private readonly getLocationEncountersRoute = `${this.apiUrl}/locations/:location/generations/:generation/encounters`;
-  private readonly postPokemonCaught = `${this.apiUrl}/pokemon/:pokemon_id/caught/:caught`;
-
-  private readonly onError = (error: any) => {
-    console.error(error);
-  };
   private readonly getHeaders = () => {
     return { headers: { Authorization: `Bearer ${this.password}` } };
   };
 
   login = (onSuccess: () => void, onError: (error: any) => void) => {
     return axios.post(`${this.apiUrl}/login`, null, this.getHeaders()).then(onSuccess).catch(onError);
-  };
-
-  getAllPokemon = (generation: number, onSuccess: (response: AxiosResponse) => void, onError: (error: any) => void) => {
-    return axios.get(`${this.apiUrl}/pokemon/generations/${generation}`, this.getHeaders()).then(onSuccess).catch(onError);
   };
 }
 
@@ -45,6 +33,7 @@ export interface Encounter {
   id: number;
   location: string;
   pokemon_id: number;
+  pokemon_name: string | null;
   version: string | null;
   conditions: string | null;
   obtain_method: string | null;

@@ -12,6 +12,7 @@ import { Location } from './components/Location';
 export default function App() {
   const store = useStore();
   const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
+
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
