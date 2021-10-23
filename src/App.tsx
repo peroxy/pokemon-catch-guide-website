@@ -1,6 +1,6 @@
 import React from 'react';
 import { Login } from './components/Login';
-import { Route, Redirect } from 'wouter';
+import { Route, Redirect, Switch } from 'wouter';
 import { useStore } from './Store';
 import { PokemonList } from './components/PokemonList';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -14,19 +14,22 @@ export default function App() {
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
-        <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
-        <Route path={'/login'} component={Login} />
-        <Route path={'/pokemon'} component={PokemonList} />
-        <Route path={'/pokemon/details/:id'}>
-          {(params) => {
-            const id = parseInt(params.id);
-            if (params && !isNaN(id)) {
-              return <PokemonDetails pokemonId={parseInt(params.id)} />;
-            } else {
-              return <PageNotFound />;
-            }
-          }}
-        </Route>
+        <Switch>
+          <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
+          <Route path={'/login'} component={Login} />
+          <Route path={'/pokemon'} component={PokemonList} />
+          <Route path={'/pokemon/details/:id'}>
+            {(params) => {
+              const id = parseInt(params.id);
+              if (params && !isNaN(id)) {
+                return <PokemonDetails pokemonId={parseInt(params.id)} />;
+              } else {
+                return <PageNotFound />;
+              }
+            }}
+          </Route>
+          <Route component={PageNotFound} />
+        </Switch>
       </QueryClientProvider>
     </ChakraProvider>
   );
