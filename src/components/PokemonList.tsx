@@ -123,7 +123,7 @@ export const PokemonList = (): JSX.Element => {
               <Tr>
                 <Td isNumeric>{pokemon.dex_id}</Td>
                 <Td textTransform={'capitalize'}>
-                  <Link href={`pokemon/details/${pokemon.id}`}>{pokemon.name}</Link>
+                  <Link href={`/pokemon/details/${pokemon.id}`}>{pokemon.name}</Link>
                 </Td>
                 <Td textAlign={'center'}>
                   {mutation.isLoading && mutation?.variables?.id === pokemon.id ? (
