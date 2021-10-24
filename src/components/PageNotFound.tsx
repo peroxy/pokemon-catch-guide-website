@@ -1,30 +1,18 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Link, VStack } from '@chakra-ui/react';
+import { Text, Box, Center, Heading, VStack, Image } from '@chakra-ui/react';
 
 export const PageNotFound = () => {
   return (
-    <Center minHeight={'100vh'}>
+    <Center mt={'5rem'}>
       <VStack>
-        <Alert
-          status="info"
-          variant="subtle"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          textAlign="center"
-          height="200px"
-        >
-          <AlertIcon boxSize="40px" mr={0} />
-          <AlertTitle mt={4} mb={1} fontSize="lg">
-            404
-          </AlertTitle>
-          <AlertDescription maxWidth="sm">
-            Page not found or does not exist.
-            <Box minHeight={'2vh'} />
-            <Link href={'/'}>
-              <Button>Go Back Home</Button>
-            </Link>
-          </AlertDescription>
-        </Alert>
+        <Heading fontSize={'9xl'} textShadow={'2px 2px 8px #4AB7FF'}>
+          404
+        </Heading>
+        <Box>
+          <Text align={'center'} m={'1rem'}>
+            Page nowt found ow does nowt exist, did uwu weawwy mean tuwu duwu thiws? Sowwy senpai ^_^
+          </Text>
+        </Box>
+        <Image src={'/404.jpg'} alt={'deep fried pikachu with laughing with open eye crying laughing emoji '} />
       </VStack>
     </Center>
   );
