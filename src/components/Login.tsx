@@ -19,6 +19,7 @@ export const Login = (): JSX.Element => {
         setLocation('/pokemon');
       },
       (error) => {
+        console.error(error);
         store.removePassword();
         setError(true);
       }
@@ -26,7 +27,7 @@ export const Login = (): JSX.Element => {
   };
 
   return (
-    <Center marginTop={'40vh'}>
+    <Center>
       <Box width={['95%', '70%', '50%', '25%']}>
         <Stack spacing={5}>
           <Text textAlign={'center'} fontSize={'xl'}>

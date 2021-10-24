@@ -33,6 +33,7 @@ export interface Encounter {
   id: number;
   location: string;
   pokemon_id: number;
+  dex_id: number | null;
   pokemon_name: string | null;
   version: string | null;
   conditions: string | null;

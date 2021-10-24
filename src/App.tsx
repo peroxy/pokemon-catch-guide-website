@@ -8,6 +8,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { PokemonDetails } from './components/PokemonDetails';
 import { PageNotFound } from './components/PageNotFound';
 import { Location } from './components/Location';
+import { NavigationBar } from './components/NavigationBar';
+import './style/style.css';
 
 export default function App() {
   const store = useStore();
@@ -16,6 +18,7 @@ export default function App() {
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
+        <NavigationBar />
         <Switch>
           <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
           <Route path={'/login'} component={Login} />

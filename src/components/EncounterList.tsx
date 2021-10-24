@@ -11,7 +11,7 @@ export const EncounterList = (props: EncounterListProps) => {
   return (
     <List>
       {sort(props.encounters)
-        .desc((prop) => prop.chance)
+        .by([{ asc: (x) => x.pokemon_id }, { desc: (x) => x.chance }])
         .map((encounter, i) => {
           return (
             <ListItem key={`pkmn-enc-${i}`}>
@@ -21,7 +21,7 @@ export const EncounterList = (props: EncounterListProps) => {
                   <HStack>
                     <Tag>Name</Tag>
                     <Link href={`/pokemon/details/${encounter.pokemon_id}`}>
-                      <Text>{encounter.pokemon_name}</Text>
+                      <Text textTransform={'capitalize'}>{encounter.pokemon_name}</Text>
                     </Link>
                   </HStack>
                 )}
