@@ -26,6 +26,7 @@ import { toTitleCase } from '../util/stringUtils';
 export interface PokemonDetailsProps {
   pokemonId: number;
   hideEncounters?: boolean;
+  onCaughtChanged?: (caught: boolean) => void;
 }
 export const PokemonDetails = (props: PokemonDetailsProps) => {
   const store = useStore();
@@ -52,7 +53,7 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
 
   if (isLoading || isFetching) {
     return (
-      <Center minHeight={'50vh'}>
+      <Center minHeight={'25vh'}>
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       </Center>
     );
@@ -110,14 +111,19 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
               onChange={(event) => {
                 mutation.mutate({ caught: event.target.checked, id: data!!.details.id });
                 data!!.details.caught = event.target.checked;
+                props.onCaughtChanged?.(event.target.checked);
               }}
             />
           </HStack>
         </VStack>
-        {!props.hideEncounters && <Helmet title={`${toTitleCase(data!!.details.name)}`} />}
-        {!props.hideEncounters && <Divider width={'85vw'} borderWidth={'2px'} />}
-        {!props.hideEncounters && <Heading size={'sm'}>Encounters</Heading>}
-        {!props.hideEncounters && data && <EncounterList showPokemonName={false} showLocation encounters={data.encounters} />}
+        {!props.hideEncounters && (
+          <>
+            <Helmet title={`${toTitleCase(data!!.details.name)}`} />
+            <Divider width={'85vw'} borderWidth={'2px'} />
+            <Heading size={'sm'}>Encounters</Heading>
+            {data && <EncounterList showPokemonName={false} showLocation encounters={data.encounters} />}
+          </>
+        )}
       </VStack>
     </Center>
   );

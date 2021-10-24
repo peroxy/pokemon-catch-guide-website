@@ -13,6 +13,7 @@ import {
 import { Encounter, Pokemon } from '../api/api';
 import { groupBy } from '../util/arrayUtils';
 import { PokemonDetails } from './PokemonDetails';
+import { useState } from 'react';
 
 export interface PokemonEncountersProps {
   encounters: Encounter[];
@@ -20,8 +21,21 @@ export interface PokemonEncountersProps {
 }
 
 export const PokemonEncounters = (props: PokemonEncountersProps) => {
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>(props.pokemonList);
+
   const isPokemonCaught = (pokemonId: number) => {
-    return props.pokemonList.find((value) => value.id === pokemonId)?.caught ?? false;
+    return pokemonList.find((value) => value.id === pokemonId)?.caught ?? false;
+  };
+
+  const onCaughtChanged = (caught: boolean, firstEncounter: Encounter) => {
+    let prevPokemonList = [...pokemonList];
+    for (const updated of pokemonList.filter((value) => value.dex_id === firstEncounter.dex_id)) {
+      const found = prevPokemonList.find((value) => value.id === updated.id);
+      if (found) {
+        found.caught = caught;
+      }
+    }
+    setPokemonList(prevPokemonList);
   };
 
   return (
@@ -38,13 +52,18 @@ export const PokemonEncounters = (props: PokemonEncountersProps) => {
                     name={firstEncounter.pokemon_name!!}
                     size={'md'}
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${encounter[0].dex_id}.png`}
+                    cursor={'pointer'}
                   />
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />
                   <PopoverCloseButton />
                   <PopoverBody>
-                    <PokemonDetails pokemonId={firstEncounter.pokemon_id} hideEncounters />
+                    <PokemonDetails
+                      pokemonId={firstEncounter.pokemon_id}
+                      hideEncounters
+                      onCaughtChanged={(caught) => onCaughtChanged(caught, firstEncounter)}
+                    />
                   </PopoverBody>
                 </PopoverContent>
               </Popover>
