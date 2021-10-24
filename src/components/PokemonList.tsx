@@ -94,6 +94,22 @@ export const PokemonList = (): JSX.Element => {
     );
   }
 
+  const getCaughtCheckbox = (pokemon: Pokemon, i: number) => {
+    return (
+      <Checkbox
+        size={'lg'}
+        defaultIsChecked={pokemon.caught}
+        colorScheme={pokemon.caught ? 'green' : 'red'}
+        onChange={(event) => {
+          mutation.mutate({ caught: event.target.checked, id: pokemon.id });
+          let updatedPokemonList = [...pokemonList];
+          updatedPokemonList[i].caught = event.target.checked;
+          setPokemonList(updatedPokemonList);
+        }}
+      />
+    );
+  };
+
   return (
     <>
       {generationBar}
@@ -119,6 +135,7 @@ export const PokemonList = (): JSX.Element => {
             if ((searchName && !pokemon.name.includes(searchName)) || (searchNumber && pokemon.dex_id !== searchNumber)) {
               show = false;
             }
+
             return show ? (
               <Tr>
                 <Td isNumeric>{pokemon.dex_id}</Td>
@@ -129,17 +146,7 @@ export const PokemonList = (): JSX.Element => {
                   {mutation.isLoading && mutation?.variables?.id === pokemon.id ? (
                     <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="sm" />
                   ) : (
-                    <Checkbox
-                      size={'lg'}
-                      defaultIsChecked={pokemon.caught}
-                      colorScheme={pokemon.caught ? 'green' : 'red'}
-                      onChange={(event) => {
-                        mutation.mutate({ caught: event.target.checked, id: pokemon.id });
-                        let updatedPokemonList = [...pokemonList];
-                        updatedPokemonList[i].caught = event.target.checked;
-                        setPokemonList(updatedPokemonList);
-                      }}
-                    />
+                    getCaughtCheckbox(pokemon, i)
                   )}
                 </Td>
               </Tr>
