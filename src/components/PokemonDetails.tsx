@@ -10,11 +10,14 @@ import {
   Avatar,
   AvatarBadge,
   Badge,
+  Button,
   Center,
   Checkbox,
   Divider,
   Heading,
   HStack,
+  Image,
+  Link,
   Spinner,
   Text,
   VStack
@@ -72,13 +75,30 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
   return (
     <Center marginTop={'1em'}>
       <VStack spacing={'1rem'}>
-        <Avatar size={'2xl'} src={`/sprites/artwork/${data?.details.dex_id}.png`} name={data?.details.name} bg={'gray.300'}>
-          <AvatarBadge boxSize={'0.8em'} bg={'gray.300'} borderWidth={'0px'} boxShadow={'0px 0px 5px 3px rgba(0,0,0,0.5)'}>
-            <Text fontSize={'sm'} fontWeight={'bold'} color={'blackAlpha.700'}>
-              #{data?.details.dex_id}
-            </Text>
-          </AvatarBadge>
-        </Avatar>
+        <HStack align={'center'}>
+          {data!!.details.dex_id - 1 > 0 && (
+            <Link href={`/pokemon/details/${props.pokemonId - 1}`}>
+              <Button size={'sm'} rightIcon={<Image src={`/sprites/icons/${data?.details.dex_id!! - 1}.png`} />}>
+                {'<'}
+              </Button>
+            </Link>
+          )}
+          <Avatar size={'2xl'} src={`/sprites/artwork/${data?.details.dex_id}.png`} name={data?.details.name} bg={'gray.300'}>
+            <AvatarBadge boxSize={'0.8em'} bg={'gray.300'} borderWidth={'0px'} boxShadow={'0px 0px 5px 3px rgba(0,0,0,0.5)'}>
+              <Text fontSize={'sm'} fontWeight={'bold'} color={'blackAlpha.700'}>
+                #{data?.details.dex_id}
+              </Text>
+            </AvatarBadge>
+          </Avatar>
+          {data!!.details.dex_id + 1 <= store.generationMaxDexNumber && (
+            <Link href={`/pokemon/details/${props.pokemonId + 1}`}>
+              <Button size={'sm'} leftIcon={<Image src={`/sprites/icons/${data?.details.dex_id!! + 1}.png`} />}>
+                {'>'}
+              </Button>
+            </Link>
+          )}
+        </HStack>
+
         <Divider width={'85vw'} borderWidth={'2px'} />
         <VStack minWidth={'85vw'}>
           <Text fontWeight={'bold'} textTransform={'capitalize'}>
