@@ -83,7 +83,12 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
               </Button>
             </Link>
           )}
-          <Avatar size={'2xl'} src={`/sprites/artwork/${data?.details.dex_id}.png`} name={data?.details.name} bg={'gray.300'}>
+          <Avatar
+            size={'2xl'}
+            src={`/sprites/artwork/${data?.details.dex_id}.png`}
+            name={data?.details.name}
+            bg={data?.details.caught ? 'green.300' : 'gray.300'}
+          >
             <AvatarBadge boxSize={'0.8em'} bg={'gray.300'} borderWidth={'0px'} boxShadow={'0px 0px 5px 3px rgba(0,0,0,0.5)'}>
               <Text fontSize={'sm'} fontWeight={'bold'} color={'blackAlpha.700'}>
                 #{data?.details.dex_id}
