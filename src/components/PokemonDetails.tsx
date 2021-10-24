@@ -83,11 +83,11 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
         <VStack minWidth={'85vw'}>
           <Text fontWeight={'bold'} textTransform={'capitalize'}>
             {data?.details.name}
-            {data?.encounters[0].is_baby && (
+            {data?.encounters[0].is_baby ? (
               <Badge ml={'1'} colorScheme={'green'}>
                 Baby
               </Badge>
-            )}
+            ) : null}
           </Text>
           <Divider m={1} />
           <HStack spacing={'1em'}>
