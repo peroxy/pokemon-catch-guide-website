@@ -1,7 +1,9 @@
 import { Text, Box, Center, Heading, VStack, Image, usePrefersReducedMotion } from '@chakra-ui/react';
+import { useTitle } from '../util/hooks';
 
 export const PageNotFound = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
+  useTitle('404 - Not Found');
 
   return (
     <Center mt={'5rem'}>

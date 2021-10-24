@@ -10,6 +10,7 @@ import { PageNotFound } from './components/PageNotFound';
 import { Location } from './components/Location';
 import { NavigationBar } from './components/NavigationBar';
 import './style/style.css';
+import { LocationList } from './components/LocationList';
 
 export default function App() {
   const store = useStore();
@@ -23,6 +24,7 @@ export default function App() {
           <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
           <Route path={'/login'} component={Login} />
           <Route path={'/pokemon'} component={PokemonList} />
+          <Route path={'/locations'} component={LocationList} />
           <Route path={'/pokemon/details/:id'}>
             {(params) => {
               const id = parseInt(params.id);

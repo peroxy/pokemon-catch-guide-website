@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Center, Heading, Spinner } from '@chakra-ui/react';
 import { EncounterList } from './EncounterList';
 import { PokemonEncounters } from './PokemonEncounters';
+import { useTitle } from '../util/hooks';
+import { locationToHuman } from '../util/pokemonUtils';
 
 export interface LocationProps {
   name: string;
@@ -12,6 +14,7 @@ export interface LocationProps {
 
 export const Location = (props: LocationProps) => {
   const store = useStore();
+  useTitle(locationToHuman(props.name));
 
   const encountersQuery = useQuery<Encounter[], Error>(['location', props.name], async () => {
     const encounters = await axios.get<Encounter[]>(
@@ -52,7 +55,9 @@ export const Location = (props: LocationProps) => {
   return (
     <>
       <Center mt={'1rem'}>
-        <Heading textTransform={'capitalize'}>{props.name.replaceAll('-', ' ')}</Heading>
+        <Heading textAlign={'center'} textTransform={'capitalize'}>
+          {props.name.replaceAll('-', ' ')}
+        </Heading>
       </Center>
       <PokemonEncounters pokemonList={pokemonQuery.data!!} encounters={encountersQuery.data!!} />
       <EncounterList encounters={encountersQuery.data!!} showLocation={false} showPokemonName />

@@ -20,6 +20,8 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { EncounterList } from './EncounterList';
+import { Helmet } from 'react-helmet';
+import { toTitleCase } from '../util/stringUtils';
 
 export interface PokemonDetailsProps {
   pokemonId: number;
@@ -112,6 +114,7 @@ export const PokemonDetails = (props: PokemonDetailsProps) => {
             />
           </HStack>
         </VStack>
+        {!props.hideEncounters && <Helmet title={`${toTitleCase(data!!.details.name)}`} />}
         {!props.hideEncounters && <Divider width={'85vw'} borderWidth={'2px'} />}
         {!props.hideEncounters && <Heading size={'sm'}>Encounters</Heading>}
         {!props.hideEncounters && data && <EncounterList showPokemonName={false} showLocation encounters={data.encounters} />}

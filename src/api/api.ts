@@ -45,3 +45,8 @@ export interface Encounter {
   evolution_method: string;
   is_baby: boolean;
 }
+
+export interface Location {
+  name: string;
+  encounters_number: number;
+}

@@ -3,12 +3,14 @@ import { useStore } from '../Store';
 import { useLocation } from 'wouter';
 import { PokemonApi } from '../api/api';
 import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Input, InputGroup, Stack, Text } from '@chakra-ui/react';
+import { useTitle } from '../util/hooks';
 
 export const Login = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const store = useStore();
   const [, setLocation] = useLocation();
   const [error, setError] = useState(false);
+  useTitle('Login');
 
   const login = async () => {
     const api = new PokemonApi(password);
