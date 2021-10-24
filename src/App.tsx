@@ -11,6 +11,7 @@ import { Location } from './components/Location';
 import { NavigationBar } from './components/NavigationBar';
 import './style/style.css';
 import { LocationList } from './components/LocationList';
+import { HelmetProvider } from 'react-helmet-async';
 
 export default function App() {
   const store = useStore();
@@ -19,25 +20,27 @@ export default function App() {
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
-        <NavigationBar />
-        <Switch>
-          <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
-          <Route path={'/login'} component={Login} />
-          <Route path={'/pokemon'} component={PokemonList} />
-          <Route path={'/locations'} component={LocationList} />
-          <Route path={'/pokemon/details/:id'}>
-            {(params) => {
-              const id = parseInt(params.id);
-              if (params && !isNaN(id)) {
-                return <PokemonDetails pokemonId={parseInt(params.id)} />;
-              } else {
-                return <PageNotFound />;
-              }
-            }}
-          </Route>
-          <Route path={'/locations/:name'}>{(params) => <Location name={params.name} />}</Route>
-          <Route component={PageNotFound} />
-        </Switch>
+        <HelmetProvider>
+          <NavigationBar />
+          <Switch>
+            <Route path={'/'}>{store.password ? <Redirect to={'/pokemon'} /> : <Redirect to={'/login'} />}</Route>
+            <Route path={'/login'} component={Login} />
+            <Route path={'/pokemon'} component={PokemonList} />
+            <Route path={'/locations'} component={LocationList} />
+            <Route path={'/pokemon/details/:id'}>
+              {(params) => {
+                const id = parseInt(params.id);
+                if (params && !isNaN(id)) {
+                  return <PokemonDetails pokemonId={parseInt(params.id)} />;
+                } else {
+                  return <PageNotFound />;
+                }
+              }}
+            </Route>
+            <Route path={'/locations/:name'}>{(params) => <Location name={params.name} />}</Route>
+            <Route component={PageNotFound} />
+          </Switch>
+        </HelmetProvider>
       </QueryClientProvider>
     </ChakraProvider>
   );

@@ -63,7 +63,9 @@ export const PokemonList = (): JSX.Element => {
     <Center margin={'1vh'}>
       <Select width={'md'} defaultValue={store.generation} onChange={(event) => store.setGeneration(parseInt(event.currentTarget.value))}>
         {[1, 2, 3, 4, 5, 6].map((value) => (
-          <option value={value}>Generation {value}</option>
+          <option key={`gen-option${value}`} value={value}>
+            Generation {value}
+          </option>
         ))}
       </Select>
     </Center>
@@ -137,7 +139,7 @@ export const PokemonList = (): JSX.Element => {
             }
 
             return show ? (
-              <Tr>
+              <Tr key={`poke-tr-${pokemon.id}`}>
                 <Td isNumeric>{pokemon.dex_id}</Td>
                 <Td textTransform={'capitalize'}>
                   <Link href={`/pokemon/details/${pokemon.id}`}>{pokemon.name}</Link>

@@ -20,7 +20,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { EncounterList } from './EncounterList';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { toTitleCase } from '../util/stringUtils';
 
 export interface PokemonDetailsProps {

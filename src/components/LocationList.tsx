@@ -52,7 +52,7 @@ export const LocationList = () => {
 
       <Tbody>
         {locations.map((loc) => (
-          <Tr>
+          <Tr key={`tr-loc-${loc.name}`}>
             <Td textTransform={'capitalize'}>
               <Link href={`/locations/${loc.name}`}>{loc.name.replaceAll('-', ' ')}</Link>
             </Td>
