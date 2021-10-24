@@ -51,7 +51,7 @@ export const PokemonEncounters = (props: PokemonEncountersProps) => {
                     background={isPokemonCaught(firstEncounter.pokemon_id) ? 'green.300' : 'gray.300'}
                     name={firstEncounter.pokemon_name!!}
                     size={'md'}
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${encounter[0].dex_id}.png`}
+                    src={`/sprites/icons/${encounter[0].dex_id}.png`}
                     cursor={'pointer'}
                   />
                 </PopoverTrigger>
