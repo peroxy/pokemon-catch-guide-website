@@ -1,6 +1,8 @@
-import { Text, Box, Center, Heading, VStack, Image } from '@chakra-ui/react';
+import { Text, Box, Center, Heading, VStack, Image, usePrefersReducedMotion } from '@chakra-ui/react';
 
 export const PageNotFound = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <Center mt={'5rem'}>
       <VStack>
@@ -12,7 +14,11 @@ export const PageNotFound = () => {
             Page nowt found ow does nowt exist, did uwu weawwy mean tuwu duwu thiws? Sowwy senpai ^_^
           </Text>
         </Box>
-        <Image src={'/404.jpg'} alt={'deep fried pikachu with laughing with open eye crying laughing emoji '} />
+        <Image
+          src={'/404.jpg'}
+          alt={'deep fried pikachu with laughing with open eye crying laughing emoji '}
+          className={prefersReducedMotion ? undefined : 'rotating'}
+        />
       </VStack>
     </Center>
   );
