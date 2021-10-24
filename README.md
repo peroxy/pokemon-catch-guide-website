@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+# Pokemon Catching Guide Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pokemon Catching Guide Website is a simple web application built with React and TypeScript. It allows the user to view all video game encounters and mark them as caught (generation 1-6 currently supported).
 
-## Available Scripts
+It is best viewed on a mobile device (works great on Iphone 13 Pro). My main use case for this website is to view on a phone without the need for a PC so I did not bother optimizing it for desktop usage. It works, but it's not super pretty. :)
 
-In the project directory, you can run:
+It serves data from the REST API located in the repository [Pokemon Catching Guide API](https://github.com/peroxy/pokemon-catch-guide-api).
 
-### `yarn start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Use the package manager [npm](https://www.npmjs.com/) to install the components required for running website.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+cd pokemon-catch-guide-website
+npm install
+```
 
-### `yarn test`
+You will also need to run the pokemon-catching-guide-api before running this project:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+cd pokemon-catch-guide-api
+npm install
+npm run start  
+# or `npm run live-reload` if you are developing 
+```
 
-### `yarn build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Open `http://localhost:3000` after running the application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Screenshots
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<details>
+    <summary>Home page with a list of all Pokemon</summary>
 
-### `yarn eject`
+![Home page with a list of all Pokemon](./screenshots/screenshot1.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+</details>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<details>
+    <summary>List of all locations</summary>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![List of all locations](./screenshots/screenshot6.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+</details>
 
-## Learn More
+<details>
+    <summary>Selected Pokemon</summary>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Selected pokemon - Kadabra](./screenshots/screenshot2.png)
+![Selected pokemon - Alakazam](./screenshots/screenshot3.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+</details>
+
+<details>
+    <summary>Location with encounters</summary>
+
+![Location with encounters](./screenshots/screenshot4.png)
+![Location with encounters - selected pokemon](./screenshots/screenshot5.png)
+
+</details>
+
+
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[Apache License 2.0](http://www.apache.org/licenses/)
