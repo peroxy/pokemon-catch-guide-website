@@ -22,6 +22,7 @@ import {
   Tr
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { GenerationSelect } from './GenerationSelect';
 
 export const PokemonList = (): JSX.Element => {
   const store = useStore();
@@ -59,22 +60,10 @@ export const PokemonList = (): JSX.Element => {
     </SimpleGrid>
   );
 
-  const generationBar = (
-    <Center margin={'1vh'}>
-      <Select width={'md'} defaultValue={store.generation} onChange={(event) => store.setGeneration(parseInt(event.currentTarget.value))}>
-        {[1, 2, 3, 4, 5, 6].map((value) => (
-          <option key={`gen-option${value}`} value={value}>
-            Generation {value}
-          </option>
-        ))}
-      </Select>
-    </Center>
-  );
-
   if (isLoading || isFetching) {
     return (
       <>
-        {generationBar}
+        <GenerationSelect />
         {searchBar}
         <Center minHeight={'50vh'}>
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
@@ -114,7 +103,7 @@ export const PokemonList = (): JSX.Element => {
 
   return (
     <>
-      {generationBar}
+      <GenerationSelect />
       {searchBar}
       <Table size="md">
         <Thead>
