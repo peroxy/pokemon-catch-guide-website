@@ -123,7 +123,10 @@ export const PokemonList = (): JSX.Element => {
             ) {
               show = true;
             }
-            if ((searchName && !pokemon.name.includes(searchName)) || (searchNumber && pokemon.dex_id !== searchNumber)) {
+            if (
+              (searchName && !pokemon.name.toLowerCase().includes(searchName.toLowerCase())) ||
+              (searchNumber && pokemon.dex_id !== searchNumber)
+            ) {
               show = false;
             }
 
