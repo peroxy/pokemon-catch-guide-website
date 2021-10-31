@@ -6,7 +6,7 @@ export class PokemonApi {
   }
 
   readonly password: string;
-  readonly apiUrl: string = process.env.API_URL || 'http://localhost:8080';
+  readonly apiUrl: string = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
   private readonly getHeaders = () => {
     return { headers: { Authorization: `Bearer ${this.password}` } };

@@ -46,7 +46,7 @@ export const useStore = create<Store>((setState) => ({
     set<string>('pokemon-catch-guide-password', '');
     setState({ password: '' });
   },
-  apiUrl: process.env.API_URL || 'http://localhost:8080',
+  apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:8080',
   generation: generation || 1,
   setGeneration: (gen: number) => {
     set<number>('pokemon-catch-guide-generation', gen);
